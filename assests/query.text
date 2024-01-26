@@ -1,0 +1,65 @@
+create database FoodApp
+
+use FoodApp
+
+CREATE TABLE MainDishes (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    MainDishName VARCHAR(50) NOT NULL,
+    Price FLOAT NOT NULL
+);
+
+
+CREATE TABLE SideDishes (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    SideDishName VARCHAR(50) NOT NULL,
+    Price INT NOT NULL
+);
+
+
+CREATE TABLE Desserts (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    DessertName VARCHAR(50) NOT NULL,
+    Price INT NOT NULL
+);
+
+
+CREATE TABLE Orders (
+    OrderID INT AUTO_INCREMENT PRIMARY KEY,
+    MainDishID INT,
+    OrderDate DATE,
+    Total FLOAT,
+    FOREIGN KEY (MainDishID) REFERENCES MainDishes(ID)
+);
+
+CREATE TABLE OrderSideDishes (
+    OrderID INT,
+    SideDishId INT,
+    PRIMARY KEY (OrderID, SideDishId),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (SideDishId) REFERENCES SideDishes(ID)
+);
+
+CREATE TABLE OrderDesserts (
+    OrderID INT,
+    DessertId INT,
+    PRIMARY KEY (OrderID, DessertId),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (DessertId) REFERENCES Desserts(ID)
+);
+
+
+
+INSERT INTO MainDishes (MainDishName, Price)
+VALUES ('rice', 100),
+       ('kottu', 400);
+
+
+INSERT INTO SideDishes (SideDishName, Price) VALUES
+('Fries', 5),
+('Salad', 7),
+('Onion Rings', 6);
+
+INSERT INTO Desserts (DessertName, Price) VALUES
+('Chocolate Cake', 10),
+('Cheesecake', 8),
+('Ice Cream Sundae', 6);
